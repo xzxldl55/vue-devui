@@ -216,7 +216,7 @@ export default defineComponent({
   <div>
     <d-button @click="handleClick">Get CheckedRows</d-button>
     <d-table ref="tableRef" :data="data" @cell-click="onCellClick" @check-change="checkChange" @check-all-change="checkAllChange">
-      <d-column type="checkable" width="30"></d-column>
+      <d-column type="checkable" width="30" :checkable="checkable"></d-column>
       <d-column field="firstName" header="First Name"></d-column>
       <d-column field="lastName" header="Last Name"></d-column>
       <d-column field="gender" header="Gender"></d-column>
@@ -272,7 +272,11 @@ export default defineComponent({
       console.log('checked:', checked);
     }
 
-    return { tableRef, data, handleClick, onCellClick, checkChange, checkAllChange };
+    const checkable = (row, index) => {
+      return row.lastName === 'Li' || false;
+    }
+
+    return { tableRef, data, handleClick, onCellClick, checkChange, checkAllChange, checkable };
   },
 });
 </script>
@@ -995,8 +999,8 @@ export default defineComponent({
 | :---------- | :----------------------------------------------------------- | :----------------------------- | :---------------- |
 | sort-change | `Function(obj: { field: string; direction: SortDirection })` | 排序回调事件，返回该列排序信息 | [列排序](#列排序) |
 | cell-click  | `Function(obj: CellClickArg)`                                | 单元格点击事件，返回单元格信息 | [表格交互](#表格交互) |
-| check-change | `Function(checked: boolean, row)` | 勾选表格行回调事件，返回该行信息 | [表格多选](#表表多选) |
-| check-all-change | `Function(checked: boolean)` | 全选表格行回调事件，返回勾选状态 | [表格多选](#表表多选) |
+| check-change | `Function(checked: boolean, row)` | 勾选表格行回调事件，返回该行信息 | [表格交互](#表格交互) |
+| check-all-change | `Function(checked: boolean)` | 全选表格行回调事件，返回勾选状态 | [表格交互](#表格交互) |
 
 ### Table 方法
 
@@ -1029,6 +1033,7 @@ export default defineComponent({
 | filter-multiple | `boolean`                       | true   | 可选，是否启用多选的方式来筛选              | [列筛选](#列筛选)     |
 | filter-list     | [FilterConfig[]](#filterconfig) | []     | 可选，筛选列表                              | [列筛选](#列筛选)     |
 | align           | [ColumnAlign](#columnalign)     | 'left' | 可选，配置水平对齐方式                      | [自定义列](#自定义列) |
+| checkable       | `Function(row, rowIndex): boolean` | --  | 可选，配置行勾选状态                       | [表格交互](#表格交互) |
 
 ### Column 事件
 

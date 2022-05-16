@@ -4,6 +4,7 @@ import { DefaultRow } from '../../table-types';
 import { Column } from './column-types';
 import { TableStore } from '../../store/store-types';
 import { Checkbox } from '../../../../checkbox';
+import { isFunction } from 'lodash';
 
 export const cellMap = {
   checkable: {
@@ -17,9 +18,11 @@ export const cellMap = {
         },
       });
     },
-    renderCell(rowData: DefaultRow, column: Column, store: TableStore, rowIndex: number): VNode {
+    renderCell(rowData: DefaultRow, column: Column, store: TableStore, rowIndex: number, props): VNode {
       return h(Checkbox, {
-        modelValue: store.states._checkList.value[rowIndex],
+        modelValue: isFunction(props.checkable.value)
+          ? props.checkable.value(store.states._data.value[rowIndex], rowIndex)
+          : store.states._checkList.value[rowIndex],
         onChange: (val: boolean) => {
           store.states._checkList.value[rowIndex] = val;
           store._table.emit('check-change', val, store.states._data.value[rowIndex]);
