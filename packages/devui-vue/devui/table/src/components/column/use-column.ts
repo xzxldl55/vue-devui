@@ -39,7 +39,7 @@ export function createColumn(props: ToRefs<TableColumnProps>, slots: Slots): Col
     if (slots.default) {
       return slots.default({ row: rowData, rowIndex });
     }
-    return cellMap[type.value || 'default'].renderCell(rowData, columnItem, store, rowIndex, props);
+    return cellMap[type.value || 'default'].renderCell(rowData, columnItem, store, rowIndex);
   }
 
   watch(

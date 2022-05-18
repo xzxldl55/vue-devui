@@ -80,7 +80,7 @@ export const tableColumnProps = {
     default: 'left',
   },
   checkable: {
-    type: Function as PropType<(row: unknown, index: number) => boolean>
+    type: Function as PropType<(row: unknown, index: number) => boolean>,
   },
 };
 

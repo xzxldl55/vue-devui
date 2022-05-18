@@ -18,11 +18,9 @@ export const cellMap = {
         },
       });
     },
-    renderCell(rowData: DefaultRow, column: Column, store: TableStore, rowIndex: number, props): VNode {
+    renderCell(rowData: DefaultRow, column: Column, store: TableStore, rowIndex: number): VNode {
       return h(Checkbox, {
-        modelValue: isFunction(props.checkable.value)
-          ? props.checkable.value(store.states._data.value[rowIndex], rowIndex)
-          : store.states._checkList.value[rowIndex],
+        modelValue: store.states._checkList.value[rowIndex],
         onChange: (val: boolean) => {
           store.states._checkList.value[rowIndex] = val;
           store._table.emit('check-change', val, store.states._data.value[rowIndex]);

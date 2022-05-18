@@ -13,6 +13,7 @@ import {
 import { tableColumnProps, TableColumnProps, TableColumn } from './column-types';
 import { TABLE_TOKEN, Table, DefaultRow } from '../../table-types';
 import { createColumn, useRender } from './use-column';
+import { isFunction } from 'lodash';
 
 let columnIdInit = 1;
 
@@ -40,6 +41,13 @@ export default defineComponent({
       const children = isSubColumn.value ? parent.vnode.el.children : owner?.hiddenColumns.value?.children;
       const columnIndex = getColumnIndex(children || [], instance.vnode.el);
       columnIndex > -1 && owner?.store.insertColumn(column, isSubColumn.value ? parent.columnConfig : null);
+
+      // 行勾选控制
+      if (isFunction(props.checkable)) {
+        owner?.store.states._data.value.forEach((row, rowIndex) => {
+          owner.store.states._checkList.value[rowIndex] = props.checkable?.(row, rowIndex);
+        });
+      }
     });
 
     watch(
