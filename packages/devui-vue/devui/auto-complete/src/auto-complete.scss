@@ -209,6 +209,10 @@
     .#{$devui-prefix}-dropdown-origin {
       background-color: transparent !important;
     }
+
+    input {
+      cursor: not-allowed;
+    }
   }
 
   &--prepend {
