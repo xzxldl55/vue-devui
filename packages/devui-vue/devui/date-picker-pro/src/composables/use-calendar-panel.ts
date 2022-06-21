@@ -1,4 +1,4 @@
-import { ref, onBeforeMount, nextTick } from 'vue';
+import { ref, onBeforeMount, nextTick, onMounted } from 'vue';
 import type { SetupContext } from 'vue';
 import { DAY_DURATION, yearItemHeight, calendarItemHeight } from '../const';
 import { CalendarDateItem, YearAndMonthItem, UseCalendarPanelReturnType, DatePickerProPanelProps } from '../date-picker-pro-types';
@@ -109,7 +109,7 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     }
     nextTick(() => {
       const scrollEl = yearScrollRef.value;
-      scrollEl?.scroll?.(0, scrollHeight);
+      scrollEl?.syncScrollTop(scrollHeight);
     });
   };
 
@@ -120,7 +120,7 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     }
     nextTick(() => {
       const scrollEl = monthScrollRef.value;
-      scrollEl?.scroll?.(0, scrollHeight);
+      scrollEl?.syncScrollTop(scrollHeight);
     });
   };
 
@@ -166,6 +166,9 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     calendarRange = [today.value.getFullYear() - 3, today.value.getFullYear() + 3];
     // 初始化先展示v-model对应的时间，如果没有展示today对应的时间
     initCalendarData();
+  });
+
+  onMounted(() => {
     initCalendarShow();
   });
 
