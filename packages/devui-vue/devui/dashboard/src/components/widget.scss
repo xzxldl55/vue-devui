@@ -1,0 +1,44 @@
+@import '../../../styles-var/devui-var.scss';
+
+:host {
+  display: block;
+  background-color: transparent;
+  position: absolute !important;
+  // hover卡片之间间距的时候不应该高亮
+  pointer-events: none;
+  // 内部元素
+  & ::ng-deep > * {
+    pointer-events: auto;
+  }
+}
+
+.ui-draggable-dragging :host > * {
+  pointer-events: none !important;
+}
+
+.devui-dashboard__widget {
+  border: 1px solid transparent;
+  box-shadow: 0 2px 8px 0 $devui-light-shadow;
+  background: $devui-base-bg;
+  border-radius: $devui-border-radius;
+  transition:
+    box-shadow $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
+    transform $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
+}
+
+:host.ui-resizable-resizing .devui-dashboard__widget,
+:host.ui-draggable-dragging .devui-dashboard__widget {
+  opacity: 1;
+}
+
+:host.ui-draggable-dragging .devui-dashboard__widget,
+.grid-stack:not(.grid-stack-static) :host.ui-draggable:not(.ui-draggable-disabled) .devui-dashboard__widget {
+  cursor: pointer;
+}
+
+.ui-draggable-dragging :host .devui-dashboard__widget,
+:host.ui-draggable-dragging .devui-dashboard__widget,
+.grid-stack:not(.grid-stack-static) :host:hover .devui-dashboard__widget {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px 0 $devui-shadow;
+}

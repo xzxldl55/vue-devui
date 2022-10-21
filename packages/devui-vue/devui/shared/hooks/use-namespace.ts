@@ -18,12 +18,12 @@ function createBem(namespace: string, element?: string, modifier?: string): stri
 
 /**
  * useNamespace
- * 
+ *
  * @param block current block name
  * @param needDot Do you need a dot prefix (defalut: false)
  * @returns UseNamespace
  */
-export function useNamespace(block: string, needDot: boolean = false): UseNamespace {
+export function useNamespace(block: string, needDot = false): UseNamespace {
   const namespace = needDot ?  `.devui-${block}` : `devui-${block}`;
   const b = () => createBem(namespace);
   const e = (element: string) => (element ? createBem(namespace, element) : '');
